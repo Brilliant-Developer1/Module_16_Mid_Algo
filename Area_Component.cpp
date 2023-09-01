@@ -57,56 +57,82 @@
 #include <utility>
 #include <valarray>
 #include <vector>
+//
 
+// #include<bits/stdc++.h>
 using namespace std;
+
+const int N = 1005;
+vector<string> adj(N);
+vector<vector<bool>> visited(N, vector<bool>(N, false));
+int n, m;
+
+bool isValid(int i, int j)
+{
+    return i >= 0 && i < n && j >= 0 && j < m && !visited[i][j] && adj[i][j] == '.';
+}
+
+int dfs(int i, int j)
+{
+    int w = 1;
+    int u[] = {0, 0, -1, 1};
+    int v[] = {-1, 1, 0, 0};
+    visited[i][j] = true;
+
+    for (int k = 0; k < 4; k++)
+    {
+        int newx = i + u[k];
+        int newyy = j + v[k];
+        if (isValid(newx, newyy))
+        {
+            w = w + dfs(newx, newyy);
+        }
+    }
+
+    return w;
+}
 
 int main()
 {
 
+    cin >> n >> m;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> adj[i];
+    }
+
+    int cnt = -1;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (adj[i][j] == '.' && !visited[i][j])
+            {
+                int nodeA = dfs(i, j);
+                if (cnt == -1 || nodeA < cnt)
+                {
+                    cnt = nodeA;
+                }
+            }
+        }
+    }
+
+    cout << cnt << endl;
+
     return 0;
 }
+
 /*
-Problem Statement
-
-You will be given a 2D matrix of size NxM which will contain only dot(.) and minus(-) where dot(.) means you can go in that cell and minus(.) means you can't.
-
-You can move in only 4 directions (Up, Down, Left and Right).
-
-The area of a component is the number of dots(.) in that component that can be accessible. You need to tell the minimum area of all available components.
-
-Note: If there are no components, print -1.
-
-Input Format
-
-First line will contain N and M.
-Next you will be given the 2D matrix.
-Constraints
-
-1 <= N, M <= 1000
-Output Format
-
-Output the minimum area.
+5 8
+########
+#..#...#
+####.#.#
+#..#...#
+########
 
 
-Sample Input 1:
-6 5
-..-..
-..-..
------
-.-...
-.----
-.....
 
-Sample Output 1:
 3
-
-Sample Input 2:
-3 3
----
----
----
-
-Sample Output 2:
--1
-
 */
