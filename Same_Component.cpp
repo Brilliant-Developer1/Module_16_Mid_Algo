@@ -58,80 +58,64 @@
 #include <valarray>
 #include <vector>
 
+// #include<bits/stdc++.h>
 using namespace std;
+
+typedef pair<int, int> pii;
+const int N = 1e3 + 10;
+vector<string> adj;
+int visited[N][N];
+vector<pii> direction = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+int n, m;
+bool isValid(int i, int j)
+{
+    return (i >= 0 && i < n && j >= 0 && j < m);
+}
+
+void dfs(int i, int j, char symbol)
+{
+    if (!isValid(i, j))
+        return;
+    if (visited[i][j])
+        return;
+    if (adj[i][j] != symbol)
+        return;
+
+    visited[i][j] = true;
+
+    for (auto d : direction)
+    {
+        dfs(i + d.first, j + d.second, symbol);
+    }
+}
 
 int main()
 {
+    cin >> n >> m;
+
+    for (int i = 0; i < n; i++)
+    {
+        string u;
+        cin >> u;
+
+        adj.push_back(u);
+    }
+
+    int si, sj, di, dj;
+    cin >> si >> sj >> di >> dj;
+
+    char symbol = adj[si][sj];
+    dfs(si, sj, symbol);
+
+    if (visited[di][dj])
+    {
+        cout << "YES" << endl;
+    }
+    else
+    {
+        cout << "NO" << endl;
+    }
 
     return 0;
 }
-/*
-Problem Statement
-
-You will be given a 2D matrix of size NxM which will contain only dot(.) and minus(-) where dot(.) means you can go in that cell and minus(.) means you can't.
-
-You can move in only 4 directions (Up, Down, Left and Right).
-
-You will be given the indexes of to cells - S(si,sj) and D(di,dj). You need to tell if these cells are in the same component or not where you can go from S to D.
-
-Input Format
-
-First line will contain N and M.
-Next you will be given the 2D matrix.
-Next line will contain si and sj.
-Last line will contain di and dj.
-Constraints
-
-1 <= N, M <= 1000
-0 <= si, di < N
-0 <= sj, dj < M
-Output Format
-
-Output "YES" if those cell are in the same component, "NO" otherwise.
-
-
-
-Sample Input 1:
-5 4
-..-.
----.
-..-.
---..
-....
-0 1
-3 2
-
-Sample Output 1:
-NO
-
-Sample Input 2:
-5 4
-....
----.
-..-.
---..
-....
-0 1
-3 2
-
-Sample Output 2:
-YES
-
-for this input:
-5 4
-....
----.
-..-.
---..
-....
-0 1
-3 2
-
-my expected output is :
-YES
-
-but this code I'm getting output :
-
-NO
-
-*/
