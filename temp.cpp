@@ -68,41 +68,47 @@ int main()
 /*
 Problem Statement
 
-You will be given a 2D matrix of size NxM which will contain only dot(.) and minus(-) where dot(.) means you can go in that cell and minus(.) means you can't.
-
-You can move in only 4 directions (Up, Down, Left and Right).
-
-You will be given the indexes of to cells - S(si,sj) and D(di,dj). You need to tell if these cells are in the same component or not where you can go from S to D.
+You will be given a chessboard of NxM size. You can move anywhere in the chessboard freely. You will be given two cells - the knight's cell K(Ki and Kj), and the queen's cell Q(Qi and Qj). You need to tell the minimum number of steps for the knight to attack the queen if the queen doesn't move.
+A knight move in 8 directions.
 
 Input Format
 
-First line will contain N and M.
-Next you will be given the 2D matrix.
-Next line will contain si and sj.
-Last line will contain di and dj.
+First line will contain T, the number of test cases.
+First line of each test case will contain N and M.
+Second line of each test case will contain Ki and Kj.
+Third line of each test case will contain Qi and Qj.
 Constraints
 
-1 <= N, M <= 1000
-0 <= si, di < N
-0 <= sj, dj < M
+1 <= T <= 100
+1 <= N, M <= 100
+0 <= Ki, Qi < N
+0 <= Kj, Qj < M
 Output Format
 
-Output "YES" if those cell are in the same component, "NO" otherwise.
-
-
+Output the minimum number of steps for the knight to reach the queen. If you can't reach to queen, print -1.
 
 Sample Input 1:
-5 4
-..-.
----.
-..-.
---..
-....
+4
+8 8
+0 0
+7 7
+5 6
 0 1
-3 2
+0 1
+4 4
+0 0
+0 1
+2 2
+0 0
+0 1
 
 Sample Output 1:
-NO
+6
+0
+3
+-1
+
+
 
 Sample Input 2:
 5 4
